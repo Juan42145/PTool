@@ -296,7 +296,7 @@ header .header__button--input {
   padding: 1em 0;
   border-radius: 1em;
   z-index: 99;
-  border: 0.1em solid var(--clr-blue);
+  border: 0.4em solid var(--clr-blue);
   background-color: var(--clr-lightgray);
   color: var(--clr-black);
 }
@@ -313,6 +313,7 @@ header .header__button--input {
 /*
 ----BACKGROUNDS----
 */
+[data-color] { --color: var(--clr-white); }
 [data-color=Bug] {--color: var(--bug);}
 [data-color=Bug] {--color: var(--bug);}
 [data-color=Dark] {--color: var(--dark);}

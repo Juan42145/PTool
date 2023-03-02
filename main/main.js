@@ -10,8 +10,8 @@ myStorage = localStorage;
 
 //Storage
 function store(id, value){
-  let user = myStorage.get('DB'); user[id] = value;
-  myStorage.set('DB', user);
+  let data = myStorage.get('DB'); data[id] = value;
+  myStorage.set('DB', data);
 }
 
 function caching(id, key, value){
@@ -57,8 +57,16 @@ function setError(COMP){
   COMP.onerror = ()=>COMP.src = getError();
 }
 
-function getPokemon(index){
-  return myStorage.get('IMG')[index]
+async function getPokemon(IMG, pname){
+  let name = pname.toLowerCase().replaceAll(' ','-');
+  let image = await fetch('https://pokeapi.co/api/v2/pokemon/'+name)
+    .then(response => response.json())
+    .then(json => {
+      if(!json) return
+      return json.sprites.front_default
+    })
+    .catch(err=>console.log(name, 'not found'))
+  IMG.src = image
 }
 
 function getCat(category){
@@ -71,7 +79,7 @@ function getCat(category){
 function makeNav(active){
   const pages = {
     HOME: '../home/home.html',
-    PARTY: '../',
+    PARTY: '../party/party.html',
     POKEMON: '../',
     CALCULATE: '../',
     STATS: '../',
@@ -147,6 +155,7 @@ function calculate(){
 
   console.log(pData)
   console.log(pivot)
+  myStorage.set('DB', DB);
   myStorage.set('pData', pData);
   myStorage.set('pivot', pivot);
   myStorage.set('norm', 100/norm);
@@ -161,6 +170,7 @@ function calcMoves(info, WEAKNESS){
     let move = calcMove(info, i, [aHit, cHit], WEAKNESS)
     if(move) moves.push(move)
   }
+  reorderMoves(info, moves)
   calcAtk(aHit, cHit)
   return moves
 }
@@ -199,6 +209,19 @@ function calcMove(info, index, pointers, WEAKNESS){
     'dmg': dmg,
     'effectiveness': SDB_ATK[type]
   }
+}
+
+function reorderMoves(info, moves){
+  console.log(info)
+  moves.sort((a,b)=>(b.dmg - a.dmg))
+  moves.forEach((move, i) => {
+    let index = +i+1
+    info['M'+index] = move.name
+    info['T'+index] = move.type
+    info['P'+index] = move.power
+    info['C'+index] = move.category
+  })
+  console.log('after',info)
 }
 
 function calcDef(WEAKNESS){

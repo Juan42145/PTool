@@ -1,9 +1,8 @@
-const LDB = myStorage.get('DB');
+const LDB = myStorage.get('DB').Pokemon;
 
 /*HOME*/
 function home(){
-  //if(myStorage.get('calc')) calculate();
-  calculate()
+  if(myStorage.get('calc')) calculate();
   let HOME = document.getElementById('js-home')
   norm = myStorage.get('norm')
   
@@ -33,7 +32,7 @@ function home(){
 }
 
 function makeInfo(CONT, pkmn, ROOT){
-    const PKMN = LDB.Pokemon[pkmn.INDEX]
+    const PKMN = LDB[pkmn.INDEX]
 
     let t1 = PKMN.Type1.toLowerCase()
     let t2 = PKMN.Type2? PKMN.Type2.toLowerCase(): t1
@@ -45,7 +44,8 @@ function makeInfo(CONT, pkmn, ROOT){
     const BG = create(CONT, 'div', {'class': 'info--bg'});
     const CN = create(CONT, 'div', {'class': 'info--cont'});
     
-    const PIC = create(BG, 'img', {'class': 'info__img', 'src': getPokemon(pkmn.INDEX)});
+    const PIC = create(BG, 'img', {'class': 'info__img'});
+    getPokemon(PIC, PKMN.Name)
     setError(PIC)
 
     const NAME = create(CN, 'div', {'class': 'info__name'});

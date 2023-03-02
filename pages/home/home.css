@@ -2,10 +2,6 @@ body{
     overflow: hidden;
 }
 
-*{
-    min-height: 0;
-}
-
 .home{
     --home_info: var(--clr-white);
     --home_space: var(--clr-black);
@@ -26,7 +22,6 @@ body{
     grid-template-columns: min-content repeat(5, max-content) repeat(18, var(--icon)) max-content;
     grid-template-rows: max-content repeat(6, var(--spacing) max-content) max-content;
     overflow: auto;
-    background-color: var(--home_bg);
 }
 
 .pokemon{
@@ -43,8 +38,8 @@ body{
     place-items: center stretch;
     margin-right: 0.2em;
     padding: 0.5em;
-    gap: 0.5em;
     background-color: var(--home_info);
+    overflow: hidden;
 }
 
 .info--bg{
@@ -103,6 +98,7 @@ body{
     grid-row: span 4;
     grid-template-columns: subgrid;
     grid-template-rows: subgrid;
+    width: max-content;
     gap: 0.1em;
 }
 
