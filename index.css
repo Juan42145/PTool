@@ -1,0 +1,47 @@
+body {
+  --index-main: var(--clr-black);
+  --index-bg: var(--clr-darkblue);
+  --index-tx: var(--clr-darkyellow);
+  --index-border: var(--clr-yellow);
+  --index-outline: var(--clr-blue);
+  --index-button: var(--clr-white);
+
+  --border: 1vw;
+  --spacing: 1.25vw;
+  --outline: 1vw;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--index-main);
+}
+
+.content {
+  width: 90vw;
+  line-height: 20vw;
+  -webkit-border-radius: 30vw;
+  border-radius: 5vw;
+  outline: none;
+
+  text-align: center;
+}
+
+div.content {
+  font-size: 8vw;
+  font-weight: bolder;
+  border: var(--spacing) solid var(--index-main);
+  box-shadow: 0 0 0 var(--border) var(--index-border),
+    0 0 0 calc(var(--border) + var(--outline)) var(--index-outline) ;
+  background-color: var(--index-bg);
+  color: var(--index-tx);
+}
+
+button.content {
+  font-size: 12vw;
+  font-weight: bolder;
+  border: var(--spacing) solid var(--index-bg);
+  box-shadow: 0 0 0 var(--border) var(--index-border),
+    0 0 0 calc(var(--border) + var(--outline)) var(--index-tx) ;
+  background-color: var(--index-outline);
+  color: var(--index-button);
+}
