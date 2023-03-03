@@ -1,0 +1,124 @@
+body{
+  overflow: hidden;
+}
+
+.stats{
+  --stats_border: var(--clr-void);
+  --stats_head: var(--clr-lightgray);
+  --stats_pkmn: var(--clr-darkgray);
+  --stats_cum: var(--clr-lightgray);
+  --stats_total: var(--clr-lightgray);
+  --stats_bg: var(--clr-black);
+  --stats_tx: var(--clr-white);
+
+  --rem: 1rem;
+
+  font-size: var(--rem);
+
+  --icon: calc(4*var(--rem));
+  --border: calc(0.1*var(--rem));
+
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  grid-template-rows: 1fr;
+  gap: 2em;
+  overflow: auto;
+}
+
+.stats > *{
+  display: grid;
+  grid-template-columns: max-content repeat(8, min(var(--icon), 1000px));
+  grid-template-rows: max-content repeat(18, 1fr) max-content;
+  grid-auto-flow: column;
+}
+
+.stats > * > *{
+  display: grid;
+  place-items: center;
+  border: var(--border) solid var(--stats_border);
+  font-weight: bolder;
+}
+
+.stats__title, .pokemon{
+  font-size: 1em;
+  background-color: var(--stats_head);
+  grid-row: 1;
+}
+
+.pokemon{
+  background-color: var(--stats_pkmn);
+}
+
+.stats__img{
+  width: var(--icon);
+}
+
+.stats__type{
+  background-color: var(--color);
+  padding: 0 0.2em;
+}
+
+.stats__cell{
+  position: relative;
+  font-size: 2em;
+  color: var(--stats_tx);
+  background-color: var(--stats_bg);
+}
+
+.stats__ttotal{
+  grid-area: -2/1;
+}
+
+.stats__ttotal, .stats__total{
+  padding: 0.5em 0;
+  background-color: var(--stats_total);
+}
+
+.total--norm{
+  background-color: var(--clr-gray);
+}
+
+.stats__cell:has(.stats__cum){
+  background-color: var(--stats_cum);
+}
+
+.stats__cum{
+  color: var(--stats_border);
+  z-index: 1;
+}
+
+.stats__bg{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0.4;
+}
+
+/*VARIANTS*/
+.cell--immune{
+  background-color: var(--clr-darkgray);
+}
+
+.cell--red{
+  color: var(--clr-red);
+}
+
+.cell--green{
+  color: var(--clr-green);
+}
+
+.cell--redder{
+  background-color: var(--clr-red)!important;
+}
+
+.cell--greener{
+  background-color: var(--clr-green)!important;
+}
+
+.bg--wk{
+  background-color: var(--clr-red);
+}
+
+.bg--rs{
+  background-color: var(--clr-green);
+}

@@ -82,7 +82,7 @@ function makeNav(active){
     PARTY: '../party/party.html',
     POKEMON: '../',
     CALCULATE: '../',
-    STATS: '../',
+    STATS: '../stats/stats.html',
   }
 
   const NAV = document.getElementById('js-nav')
@@ -146,10 +146,13 @@ function calculate(){
     const info = DB.Pokemon[index];
     const DEF = info.Type2? vmult(SDB_DEF[info.Type1], SDB_DEF[info.Type2]): SDB_DEF[info.Type1]
     calcDef(DEF)
+    let [moves, hits] = calcMoves(info, DEF)
+    console.log(DEF, hits)
     pData[info.Name] = {
       INDEX: index,
       WEAKNESS: DEF,
-      MOVES: calcMoves(info, DEF),
+      MOVES: moves,
+      HITS: hits,
     }
   })
 
@@ -172,7 +175,7 @@ function calcMoves(info, WEAKNESS){
   }
   reorderMoves(info, moves)
   calcAtk(aHit, cHit)
-  return moves
+  return [moves, cHit]
 }
 
 function calcMove(info, index, pointers, WEAKNESS){
@@ -196,9 +199,10 @@ function calcMove(info, index, pointers, WEAKNESS){
   norm = dmg > norm? dmg: norm;
 
   SDB_ATK[type].forEach((v,i) => {
-    if(v > 1) pointers[0][i] = 1
-    let div = WEAKNESS[i] < 1? 1: WEAKNESS[i]
-    if(v/div > 1) pointers[1][i] = 1
+    pointers[0][i] = Math.max(pointers[0][i], v)
+    let div = v>1? WEAKNESS[i]:-1
+    if(div == 0) div = 1/8
+    pointers[1][i] = Math.max(pointers[1][i], v/div)
   })
 
   return {
@@ -212,7 +216,6 @@ function calcMove(info, index, pointers, WEAKNESS){
 }
 
 function reorderMoves(info, moves){
-  console.log(info)
   moves.sort((a,b)=>(b.dmg - a.dmg))
   moves.forEach((move, i) => {
     let index = +i+1
@@ -221,7 +224,6 @@ function reorderMoves(info, moves){
     info['P'+index] = move.power
     info['C'+index] = move.category
   })
-  console.log('after',info)
 }
 
 function calcDef(WEAKNESS){
@@ -233,8 +235,8 @@ function calcDef(WEAKNESS){
 
 function calcAtk(aHit, cHit){
   for(i=0; i < nt; i++){
-    if(aHit[i] > 0) pivot.TATK[i]++
-    if(cHit[i] > 0) pivot.TCOMB[i]++
+    if(aHit[i] > 1) pivot.TATK[i]++
+    if(cHit[i] > 1) pivot.TCOMB[i]++
   }
 }
 
