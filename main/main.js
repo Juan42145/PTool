@@ -81,7 +81,8 @@ function makeNav(active){
     HOME: '../home/home.html',
     PARTY: '../party/party.html',
     POKEMON: '../',
-    CALCULATE: '../',
+    CALCULATOR: '../calculator/calculator.html',
+    ASSESS: '../',
     STATS: '../stats/stats.html',
   }
 
@@ -147,7 +148,6 @@ function calculate(){
     const DEF = info.Type2? vmult(SDB_DEF[info.Type1], SDB_DEF[info.Type2]): SDB_DEF[info.Type1]
     calcDef(DEF)
     let [moves, hits] = calcMoves(info, DEF)
-    console.log(DEF, hits)
     pData[info.Name] = {
       INDEX: index,
       WEAKNESS: DEF,

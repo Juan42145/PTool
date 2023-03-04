@@ -1,7 +1,3 @@
-body{
-  overflow: hidden;
-}
-
 .home{
   --home_info: var(--clr-white);
   --home_space: var(--clr-black);
@@ -20,7 +16,8 @@ body{
 
   display: grid;
   grid-template-columns: min-content repeat(5, max-content) repeat(18, var(--icon)) max-content;
-  grid-template-rows: max-content repeat(6, var(--spacing) max-content) max-content;
+  /* grid-template-rows: max-content repeat(6, 1fr) max-content; */
+  row-gap: var(--spacing);
   overflow: auto;
 }
 
@@ -159,10 +156,9 @@ body{
   z-index: 1;
 }
 
-.teff--immune{
+.teff--none{
   --opacity: 1;
   --fill: var(--clr-void);
-  color: red;
 }
 
 .teff--darkest{
@@ -185,6 +181,11 @@ body{
 .teff--lightest{
   --opacity: 0.8;
   --fill: linear-gradient(-45deg, var(--clr-light) 50%, transparent 50%);
+}
+
+.teff--immune{
+  --opacity: 1;
+  --fill: radial-gradient(circle, transparent 50%, var(--clr-light) 90%);
 }
 
 /*WEAKNESS*/
@@ -245,7 +246,6 @@ body{
 }
 
 .btype--foot{
-  margin-top: var(--spacing);
   opacity: 0.75;
   font-weight: bolder;
 }

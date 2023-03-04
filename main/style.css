@@ -66,6 +66,7 @@ html, body {
 body {
   display: grid;
   grid-template-rows: 1fr max-content;
+  overflow: hidden;
 }
 
 *::-webkit-scrollbar {
