@@ -144,27 +144,15 @@ function makeWeakness(CONT, pkmn){
   const x0 = create(CONT, 'div', {'class': 'weak__cont'})
 
   Object.values(pkmn.WEAKNESS).forEach((value, i) => {
+    let c
     if(value == 1) return
-    else if (value == 4){
-      let type = create(w4, 'div', {'class': 'weak__type', 'data-color': SDB_TYPES[i]})
-      type.textContent = SDB_TYPES[i]
-    }
-    else if (value == 2){
-      let type = create(w2, 'div', {'class': 'weak__type', 'data-color': SDB_TYPES[i]})
-      type.textContent = SDB_TYPES[i]
-    }
-    else if (value == 0.5){
-      let type = create(r2, 'div', {'class': 'weak__type', 'data-color': SDB_TYPES[i]})
-      type.textContent = SDB_TYPES[i]
-    }
-    else if (value == 0.25){
-      let type = create(r4, 'div', {'class': 'weak__type', 'data-color': SDB_TYPES[i]})
-      type.textContent = SDB_TYPES[i]
-    }
-    else{
-      let type = create(x0, 'div', {'class': 'weak__type', 'data-color': SDB_TYPES[i]})
-      type.textContent = SDB_TYPES[i]
-    }
+    else if (value == 4) c = w4
+    else if (value == 2) c = w2
+    else if (value == 0.5) c = r2
+    else if (value == 0.25) c = r4
+    else c = x0
+    let type = create(c, 'div', {'class': 'weak__type', 'data-color': SDB_TYPES[i]})
+    type.textContent = SDB_TYPES[i]
   })
 
 }

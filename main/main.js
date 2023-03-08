@@ -82,7 +82,7 @@ function makeNav(active){
     PARTY: '../party/party.html',
     POKEMON: '../',
     CALCULATOR: '../calculator/calculator.html',
-    ASSESS: '../',
+    ASSESS: '../assess/assess.html',
     STATS: '../stats/stats.html',
   }
 
