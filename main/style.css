@@ -184,9 +184,9 @@ nav .nav__btn--close:hover{
 ----HEADER----
 */
 header {
-  --head-bg: var(--clr-black);
+  --head-bg: var(--clr-darkblue);
 
-  --head_menu-bg: var(--clr-darkgray);
+  --head_menu-bg: var(--clr-darkyellow);
   --head_menu-tx: var(--clr-white);
   --head_menu-hover-bg: var(--clr-void);
   --head_menu-hover-tx: var(--clr-darkgray);

@@ -7,7 +7,14 @@ function assess(){
   LDB = myStorage.get('DB').Pokemon;
 
   let MENU = document.getElementById('js-menu')
-  makeMenu(MENU, 'ass__name', Object.keys(myStorage.get('pData')))
+  const INP = create(MENU, 'select', {'class': 'ass__name'});
+  create(INP, 'option', {'selected': true, 'hidden': true})
+  Object.entries(myStorage.get('pData')).forEach(([opt, data], i) => {
+    let o = create(INP, 'option')
+    o.textContent = opt
+    o.value = data.INDEX
+  })
+  INP.addEventListener('change',()=>{ass(INP.value)}, false);
 }
 
 function ass(opt){
@@ -16,25 +23,14 @@ function ass(opt){
   const PKMN = LDB[opt]
   const INFO = create(CONT, 'div', {'class': 'info'});
   makeInfo(INFO, PKMN)
-  const WEAK = create(CONT, 'div', {'class': 'weak'});
-  makeWeak(WEAK, PKMN)
+  const WEAK = create(CONT, 'div', {'class': 'weak', 'id': 'js-weak'});
+  makeWeak(PKMN)
   const MOVES = create(CONT, 'div', {'class': 'moves'});
   for(let i = 0; i < 4; i++){
     makeSelect(MOVES, PKMN, 'T'+(i+1), 'move', [...SDB_TYPES,''])
   }
   document.getElementById('js-data').classList.remove('hide')
   generate()
-}
-
-function makeMenu(CONT, c, opts){
-  const INP = create(CONT, 'select', {'class': c});
-  create(INP, 'option', {'selected': true, 'hidden': true})
-  opts.forEach((opt, i) => {
-    let o = create(INP, 'option')
-    o.textContent = opt
-    o.value = i
-  })
-  INP.addEventListener('change',()=>{ass(INP.value)}, false);
 }
 
 function makeInfo(CONT, PKMN){
@@ -52,7 +48,10 @@ function makeInfo(CONT, PKMN){
   makeSelect(CONT, PKMN, 'Type2', 'info__type', ['', ...SDB_TYPES], 2)
 }
 
-function makeWeak(CONT, PKMN){
+function makeWeak(PKMN){
+  CONT = document.getElementById('js-weak')
+  CONT.innerHTML = ''
+
   const w4H = create(CONT, 'div', {'class': 'weak__header'})
   const w4T = create(w4H, 'div')
   w4T.textContent = '4'
@@ -75,7 +74,9 @@ function makeWeak(CONT, PKMN){
   const r4 = create(CONT, 'div', {'class': 'weak__cont'})
   const x0 = create(CONT, 'div', {'class': 'weak__cont'})
 
-  Object.values(myStorage.get('pData')[PKMN.Name].WEAKNESS).forEach((value, i) => {
+  let [type1, type2] = Array.from(document.querySelectorAll('.info__type')).map(x => x.value)
+  let weakness = type2? vmult(SDB_DEF[type1], SDB_DEF[type2]): SDB_DEF[type1]
+  weakness.forEach((value, i) => {
     let c
     if(value == 1) return
     else if (value == 4) c = w4
@@ -105,17 +106,20 @@ function makeSelect(CONT, PKMN, prop, c, opts, update){
     }
     o.textContent = opt
   })
-  makeDropdown(INP, update, CONT)
+  makeDropdown(INP, update, CONT, PKMN)
 }
 
-function makeDropdown(INP, update, CONT){
+function makeDropdown(INP, update, CONT, PKMN){
   INP.addEventListener('change',()=>{
     INP.dataset.color = INP.value
     if(update){
       CONT.dataset['t'+update] = INP.value.toLowerCase()
       color(CONT)
+      makeWeak(PKMN)
     }
-    generate()
+    else{
+      generate()
+    }
   }, false);
 }
 
@@ -127,6 +131,7 @@ function generate(){
       if(t1 > t2) return
       let score = -1
       offense.forEach(moveType => {
+        if(!moveType) return
         if(t1 == t2) score = Math.max(score, SDB_ATK[moveType][t1])
         else score = Math.max(score, SDB_ATK[moveType][t1] * SDB_ATK[moveType][t2])
       })
@@ -145,7 +150,6 @@ function sorting(a,b){
 }
 
 function showData(data){
-  console.log(data)
   let DATA = document.getElementById('js-data')
   DATA.innerHTML = ''
   Object.entries(data).sort(sorting).forEach(([mult, list]) => {

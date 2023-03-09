@@ -15,9 +15,13 @@ function store(id, value){
 }
 
 function caching(id, key, value){
-  let cache = myStorage.get(id); if(!cache) cache = {};
-  cache[key] = value; console.log(cache);
-  myStorage.set(id, cache);
+  let cache
+  if(key == null) cache = value
+  else{
+    cache = myStorage.get(id); if(!cache) cache = {};
+    cache[key] = value;
+  }
+  myStorage.set(id, cache); console.log(cache);
 }
 
 //Create Element
@@ -80,7 +84,7 @@ function makeNav(active){
   const pages = {
     HOME: '../home/home.html',
     PARTY: '../party/party.html',
-    POKEMON: '../',
+    POKEMON: '../pokemon/pokemon.html',
     CALCULATOR: '../calculator/calculator.html',
     ASSESS: '../assess/assess.html',
     STATS: '../stats/stats.html',
@@ -144,6 +148,7 @@ function calculate(){
   };
 
   DB.Party.forEach(index => {
+    if(index === '') return
     const info = DB.Pokemon[index];
     const DEF = info.Type2? vmult(SDB_DEF[info.Type1], SDB_DEF[info.Type2]): SDB_DEF[info.Type1]
     calcDef(DEF)
