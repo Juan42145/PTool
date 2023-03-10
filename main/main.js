@@ -62,7 +62,7 @@ function setError(COMP){
 }
 
 async function getPokemon(IMG, pname){
-  let name = pname.toLowerCase().replaceAll(' ','-');
+  let name = String(pname).toLowerCase().replaceAll(' ','-');
   let image = await fetch('https://pokeapi.co/api/v2/pokemon/'+name)
     .then(response => response.json())
     .then(json => {
@@ -151,7 +151,7 @@ function calculate(){
     if(index === '') return
     const info = DB.Pokemon[index];
     const DEF = info.Type2? vmult(SDB_DEF[info.Type1], SDB_DEF[info.Type2]): SDB_DEF[info.Type1]
-    calcDef(DEF)
+    if(DEF) calcDef(DEF)
     let [moves, hits] = calcMoves(info, DEF)
     pData[info.Name] = {
       INDEX: index,
